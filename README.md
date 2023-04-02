@@ -5,5 +5,5 @@ todo:
   add settings
   add files (bashrc etc..)
 
-Added SSH keys
+Added SSH key
 
