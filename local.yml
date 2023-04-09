@@ -1,38 +1,70 @@
 ---
+# run pre tasks on any machine
 - hosts: localhost
+  tags: always
   connection: local
   become: true
-
+  pre_tasks:
+    - name: Update package cache and install updates
+      tags: always
+      apt: 
+        upgrade: dist
+        update_cache: yes
+  
+# switch this out to roles later on
   tasks: 
   - name: install packages
-    package: 
+    apt: 
       name: 
         - htop
-        - tmux
         - python3-psutil
 
-  - name: copy wallpaer file
+  - name: Copy wallpaper file
     copy:
       src: files/wallpaper.jpg
       dest: /usr/share/backgrounds/ansible-wallpaper.jpg
       owner: root
       group: root
 
-  - name: set wallpaper
+  - name: Set wallpaper
     become_user: lee
     dconf: 
       key: "/org/gnome/desktop/background/picture-uri"
       value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
 
-  - name: set wallpaper position
+  - name: Set wallpaper position
     become_user: lee
     dconf:
       key: "/org/gnome/desktop/background/picture-options"
       value: "'zoom'"
 
-  - name: copy .bashrc file
+  - name: Copy .bashrc file
     copy: 
       src: files/bashrc
       dest: /home/lee/.bashrc
       owner: lee
       group: lee
+      
+      
+  - name: install vscode 
+      apt:
+        deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+
+        
+# run clean up on all machines
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: Cleanup package cache 
+    tags: always
+    apt:
+      autoclean: yes
+    changed_when: false
+
+  - name: Autoremove orphan packages
+    tags: always
+    apt:
+      autoremove: yes
+      purge: yes
+
