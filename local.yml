@@ -47,8 +47,8 @@
       
       
   - name: install vscode 
-      apt:
-        deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    apt:
+      deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
 
         
 # run clean up on all machines
