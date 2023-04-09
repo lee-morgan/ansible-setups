@@ -52,8 +52,9 @@
 
         
 # run clean up on all machines
-- hosts: all
-  become: true
+- hosts: localhost
+  become: true 
+  connection: local
   tasks:
   
   - name: Cleanup package cache 
