@@ -46,11 +46,29 @@
       group: lee
       
       
-  - name: install vscode 
+  - name: install visual studio code 
     apt:
-      deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+      name: code
+      state: latest
 
-        
+  - name: Remove geary package
+    apt: 
+      name: geary
+      state: absent
+      
+  - name: Install cmatrix
+    apt:
+      name: cmatrix
+      state: latest
+      
+  - name: Install neofetch
+    apt:
+      name: neofetch
+      
+  - name: Install evolution 
+    apt:
+      name: evolution
+              
 # run clean up on all machines
 - hosts: localhost
   become: true 
