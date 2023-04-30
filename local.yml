@@ -1,8 +1,7 @@
 ---
 # run pre tasks on any machine
-- hosts: localhost
+- hosts: all
   tags: always
-  connection: local
   become: true
   pre_tasks:
     - name: Update package cache and install updates

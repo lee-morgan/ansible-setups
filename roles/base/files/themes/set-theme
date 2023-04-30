@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# First get the current theme
+current_theme=$(gsettings get org.gnome.desktop.interface color-scheme)
+
+light_wallpaper="/usr/share/backgrounds/light-mode.jpg"
+dark_wallpaper="/usr/share/backgrounds/dark-mode.jpg"
+theme_options='zoom'
+
+# echo "Current theme is $current_theme."
+
+if [ $current_theme == "'prefer-light'" ]
+then
+    # echo "Switching to Dark Theme"
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 
+    gsettings set org.gnome.desktop.interface gtk-theme 'Pop-dark'
+    gsettings set org.gnome.desktop.interface cursor-theme 'material-light-cursors'
+    gsettings set org.gnome.desktop.background picture-uri-dark $dark_wallpaper
+else
+    # echo "Switching to Light Theme"
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' 
+    gsettings set org.gnome.desktop.interface gtk-theme 'Pop'
+    gsettings set org.gnome.desktop.interface cursor-theme 'material-dark-cursors'
+    gsettings set org.gnome.desktop.background picture-uri $light_wallpaper
+fi
+
+gsettings set org.gnome.desktop.background picture-options $theme_options
